@@ -13,7 +13,7 @@ def classify_battery_health(present_capacity):
 
     if soh_percentage > 80:
         return "healthy"
-    elif 62 <= soh_percentage <= 80:
+    elif 62 <= soh_percentage <= 80:  # Adjusted condition for "exchange"
         return "exchange"
     else:
         return "failed"
