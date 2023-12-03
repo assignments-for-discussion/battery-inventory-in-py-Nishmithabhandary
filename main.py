@@ -5,7 +5,7 @@ def classify_battery(capacity):
     # Classify batteries based on SoH ranges
     if soh_percentage > 80:
         return "healthy"
-    elif 80 >= soh_percentage >= 62:
+    elif 62 <= soh_percentage <= 80:
         return "exchange"
     else:
         return "failed"
