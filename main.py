@@ -43,5 +43,5 @@ def test_bucketing_by_health():
 
     print("Done counting :)")
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     test_bucketing_by_health()
