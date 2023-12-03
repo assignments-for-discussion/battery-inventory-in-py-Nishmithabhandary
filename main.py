@@ -1,11 +1,19 @@
-def classify_battery(capacity):
-    # Calculate SoH percentage
-    soh_percentage = (capacity / 120) * 100
+def classify_battery_health(present_capacity):
+    """
+    Classify battery health based on State of Health (SoH) percentage.
 
-    # Classify batteries based on SoH ranges
+    Args:
+    - present_capacity: The charge available in the battery after a full charge.
+
+    Returns:
+    - Classification of battery health: "healthy", "exchange", or "failed".
+    """
+    rated_capacity = 120  # Rated capacity of a new battery
+    soh_percentage = (present_capacity / rated_capacity) * 100
+
     if soh_percentage > 80:
         return "healthy"
-    elif 62 <= soh_percentage < 80:
+    elif 62 <= soh_percentage <= 80:
         return "exchange"
     else:
         return "failed"
@@ -23,7 +31,7 @@ def count_batteries_by_health(present_capacities):
     counts = {"healthy": 0, "exchange": 0, "failed": 0}
 
     for capacity in present_capacities:
-        classification = classify_battery(capacity)
+        classification = classify_battery_health(capacity)
         counts[classification] += 1
 
     return counts
@@ -34,8 +42,7 @@ def test_bucketing_by_health():
     # Test case with various SoH percentages
     present_capacities = [113, 116, 80, 5, 92, 70]
     counts = count_batteries_by_health(present_capacities)
-    print("Counts:", counts)  # Debugging print to inspect counts
-
+    
     # Asserts based on provided information
     assert counts["healthy"] == 2
     assert counts["exchange"] == 3
@@ -45,8 +52,9 @@ def test_bucketing_by_health():
     assert count_batteries_by_health([120, 120, 120]) == {"healthy": 3, "exchange": 0, "failed": 0}
     assert count_batteries_by_health([60, 61, 62]) == {"healthy": 0, "exchange": 3, "failed": 0}
     assert count_batteries_by_health([30, 40, 50]) == {"healthy": 0, "exchange": 0, "failed": 3}
+    assert count_batteries_by_health([85, 83, 78, 60, 58]) == {"healthy": 3, "exchange": 2, "failed": 0}
 
-    print("Done counting :)")
+    print("All tests passed! Done counting :)")
 
 if __name__ == '__main__':
     test_bucketing_by_health()
