@@ -34,6 +34,7 @@ def test_bucketing_by_health():
     # Test case with various SoH percentages
     present_capacities = [113, 116, 80, 5, 92, 70]
     counts = count_batteries_by_health(present_capacities)
+    print("Counts:", counts)  # Debugging print to inspect counts
 
     # Asserts based on provided information
     assert counts["healthy"] == 2
