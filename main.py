@@ -1,3 +1,15 @@
+def classify_battery(capacity):
+    # Calculate SoH percentage
+    soh_percentage = (capacity / 120) * 100
+
+    # Classify batteries based on SoH ranges
+    if soh_percentage > 80:
+        return "healthy"
+    elif 62 < soh_percentage < 80:
+        return "exchange"
+    else:
+        return "failed"
+
 def count_batteries_by_health(present_capacities):
     """
     Count batteries based on their state of health (SoH).
@@ -11,16 +23,8 @@ def count_batteries_by_health(present_capacities):
     counts = {"healthy": 0, "exchange": 0, "failed": 0}
 
     for capacity in present_capacities:
-        # Calculate SoH percentage
-        soh_percentage = (capacity / 120) * 100
-
-        # Classify batteries based on SoH ranges
-        if soh_percentage > 80:
-            counts["healthy"] += 1
-        elif 62 < soh_percentage < 80:
-            counts["exchange"] += 1
-        else:
-            counts["failed"] += 1
+        classification = classify_battery(capacity)
+        counts[classification] += 1
 
     return counts
 
